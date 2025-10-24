@@ -1,0 +1,29 @@
+# Build directories
+build/
+sim_build/
+*.ghw
+*.vcd
+*.cf
+
+# Vivado
+.Xil/
+*.jou
+*.log
+*.str
+*.xpr
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
