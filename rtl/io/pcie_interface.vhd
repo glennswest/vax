@@ -1,6 +1,7 @@
 -- PCIe Interface
--- Provides host communication for virtual devices
--- Maps disk images and console from host system
+-- Provides PCIe bus interface for additional peripheral devices
+-- Supports: PCIe Ethernet, GPU, NVMe storage, SATA controllers, etc.
+-- Generic PCIe device support with BAR mapping
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;

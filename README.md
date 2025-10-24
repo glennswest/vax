@@ -24,7 +24,7 @@ This project implements a VAX-11/780 processor in VHDL for FPGA deployment, capa
 - DDR4/DDR5 interface via Xilinx MIG
 
 ### I/O System
-- PCIe interface for host communication
+- PCIe interface for additional devices (Ethernet, GPU, storage)
 - MASSBUS controller for virtual disk devices
 - UNIBUS controller for peripherals
 - Virtual TTY devices for console
