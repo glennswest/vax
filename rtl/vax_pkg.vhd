@@ -26,6 +26,7 @@ package vax_pkg is
     -- Array types for operands
     type longword_array_t is array(integer range <>) of longword_t;
     type virt_addr_array_t is array(integer range <>) of virt_addr_t;
+    type integer_array_t is array(integer range <>) of integer;
 
     -- Register names
     constant REG_R0  : integer := 0;
