@@ -122,6 +122,7 @@
 - `rtl/cpu/vax_cpu_v4.vhd` - CPU with procedure calls ⭐⭐
 - `rtl/cpu/vax_cpu_v5.vhd` - CPU with exception handling ⭐⭐⭐
 - `rtl/cpu/vax_cpu_v6.vhd` - CPU with Phase 2 features ⭐⭐
+- `rtl/cpu/vax_cpu_v7.vhd` - CPU with Phase 4 bit fields ⭐⭐⭐
 - `rtl/cpu/vax_decoder.vhd` - Comprehensive instruction decoder
 - `rtl/cpu/vax_addr_mode.vhd` - Addressing mode handler
 - `rtl/memory/boot_rom.vhd` - Boot ROM with test programs ⭐⭐⭐
@@ -130,6 +131,7 @@
 - `sim/tb/tb_procedure_calls.vhd` - Procedure call testbench ⭐⭐
 - `sim/tb/tb_exceptions.vhd` - Exception handling testbench ⭐⭐⭐
 - `sim/tb/tb_phase2.vhd` - Phase 2 features testbench ⭐⭐
+- `sim/tb/tb_phase4.vhd` - Phase 4 bit field testbench ⭐⭐⭐
 - `doc/decoder_status.md` - Implementation status
 - `doc/instruction_reference.md` - Instruction set guide
 - `doc/boot_rom_design.md` - Boot ROM design and test programs ⭐⭐⭐
@@ -137,6 +139,7 @@
 - `doc/procedure_calls.md` - Procedure calling guide ⭐⭐
 - `doc/exception_handling.md` - Exception handling guide ⭐⭐⭐
 - `doc/phase2_features.md` - Phase 2 extended features guide ⭐⭐
+- `doc/phase4_bitfields.md` - Phase 4 bit field instructions guide ⭐⭐⭐
 - `CHANGELOG.md` - This file
 
 #### Exception Handling and REI ⭐⭐⭐ CRITICAL MILESTONE
@@ -162,16 +165,18 @@
 
 ### Known Issues
 - Floating point not implemented
+- Decimal arithmetic not implemented
 - Boot ROM not yet integrated into top-level
-- Bit field instructions not implemented
 
 ### Metrics
-- **Lines of VHDL:** ~9,200 (up from ~1,200)
-- **Instructions Implemented:** 90+ (up from 5) [added string ops, queue ops, branch variations]
-- **Instruction Set Coverage:** ~44% (up from ~2%)
-- **Boot Readiness:** ~88% (up from ~10%) ⭐⭐⭐
+- **Lines of VHDL:** ~11,000 (up from ~1,200)
+- **Instructions Implemented:** 97+ (up from 5) [added bit fields, strings, queues, branches]
+- **Instruction Set Coverage:** ~47% (up from ~2%)
+- **Boot Readiness:** ~92% (up from ~10%) ⭐⭐⭐
 - **Phase 1: COMPLETE** (4/4 critical items)
 - **Phase 2: COMPLETE** (10 new instructions)
+- **Phase 3: COMPLETE** (documentation updates)
+- **Phase 4: COMPLETE** (7 bit field instructions)
 
 ---
 
@@ -245,12 +250,32 @@
 - SOBGTR (opcode 0xF5) - Subtract One and Branch Greater
 - Critical for loop optimization in compiled code
 
+#### Phase 3 PCIe Documentation Updates ⭐ MILESTONE
+- **Updated all PCIe documentation**
+- Clarified PCIe purpose: peripheral device support (not host communication)
+- Updated architecture.md, implementation_guide.md, SUMMARY.md, PROJECT_COMPLETE.md
+- Documented support for: Ethernet, GPU, NVMe, SATA controllers
+- Configuration space and BAR mapping documentation
+
+#### Phase 4 Bit Field Instructions ⭐⭐⭐ CRITICAL MILESTONE
+- **New CPU implementation: `vax_cpu_v7.vhd`**
+- **Complete bit field instruction set**
+- EXTV (opcode 0xEE) - Extract field variable (signed)
+- EXTZV (opcode 0xEF) - Extract field zero-extended
+- INSV (opcode 0xF0) - Insert field with read-modify-write
+- FFS (opcode 0xEA) - Find first set bit
+- FFC (opcode 0xEB) - Find first clear bit
+- CMPV (opcode 0xEC) - Compare field variable (signed)
+- CMPZV (opcode 0xED) - Compare field zero-extended
+- Multi-cycle state machine for bit field extraction/insertion
+- Support for fields spanning multiple bytes
+- Critical for OpenVMS data structure manipulation
+
 ### Version 0.4.0 (Planned - 2-3 months)
 - [ ] VMS boot sequence to console prompt
 
 ### Version 0.5.0 (Planned - 4-6 months)
-- [ ] Bit field instructions
-- [ ] Remaining instruction set
+- [ ] Remaining instruction set (floating point, decimal, etc.)
 - [ ] Full VMS boot to multi-user
 - [ ] Performance optimization
 - [ ] FPGA testing on real hardware

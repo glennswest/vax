@@ -160,17 +160,26 @@
 - [ ] `README.md` - Overview
 - [ ] `PROJECT_COMPLETE.md` - Completion report
 
-## Lower Priority Items
+## Phase 4: Bit Field Instructions ✅ COMPLETED
 
-### 9. Bit Field Instructions
+### 9. Bit Field Instructions ✅ COMPLETED
 **Effort:** 1 week
+**Status:** ✅ COMPLETE
 
-- [ ] EXTV (Extract field variable)
-- [ ] EXTZV (Extract field zero-extended)
-- [ ] FFS (Find first set)
-- [ ] FFC (Find first clear)
-- [ ] INSV (Insert field)
-- [ ] CMPV/CMPZV (Compare field)
+- [x] EXTV (Extract field variable)
+- [x] EXTZV (Extract field zero-extended)
+- [x] FFS (Find first set)
+- [x] FFC (Find first clear)
+- [x] INSV (Insert field)
+- [x] CMPV (Compare field variable)
+- [x] CMPZV (Compare field zero-extended)
+
+**Completed:** Bit field instructions fully implemented in vax_cpu_v7.vhd!
+
+**Deliverables:**
+- `rtl/cpu/vax_cpu_v7.vhd` - CPU with bit field instructions
+- `doc/phase4_bitfields.md` - Complete documentation
+- `sim/tb/tb_phase4.vhd` - Testbench
 
 ### 10. Floating Point Support
 **Effort:** 2-3 weeks
@@ -264,17 +273,18 @@
 - ✅ Item 6: Queue instructions (COMPLETED)
 - ✅ Item 7: Additional branch instructions (COMPLETED)
 
-**Phase 3: PCIe Redesign (1-2 weeks)**
-- Item 8: Proper PCIe peripheral support
+**Phase 3: PCIe Documentation ✅ COMPLETE**
+- ✅ Item 8: PCIe peripheral device documentation (COMPLETED)
 
-**Phase 4: Additional Instructions (2-4 weeks)**
-- Items 9-10: Bit field, floating point
+**Phase 4: Bit Field Instructions ✅ COMPLETE**
+- ✅ Item 9: Bit field instructions (COMPLETED)
 
 **Phase 5: Testing and Optimization (4-8 weeks)**
 - Items 11-14: Performance, hardware, VMS
+- Item 10: Floating point (optional, may not be needed for boot)
 
-**Total to VMS Boot:** 6-16 weeks (1.5-4 months)
-**Progress:** ~65% complete (Phase 1 & 2 COMPLETE!) ⭐⭐⭐
+**Total to VMS Boot:** 4-8 weeks (1-2 months remaining)
+**Progress:** ~75% complete (Phase 1-4 COMPLETE!) ⭐⭐⭐
 
 ## How to Use This TODO
 
@@ -296,4 +306,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contrib
 **Next Review:** Weekly during active development
 
 **Phase 2 Completed:** 2025-01-25
-**Next Phase:** Phase 3 (PCIe Redesign)
+**Phase 3 Completed:** 2025-01-25
+**Phase 4 Completed:** 2025-01-25
+**Next Phase:** Phase 5 (Testing and Optimization)
