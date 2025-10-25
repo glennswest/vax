@@ -1,45 +1,140 @@
-# VAX Boot ROM Design
+# VAX Boot ROM Design - Implementation
 
 ## Overview
 
-The boot ROM provides the initial code executed when the VAX powers on. It's stored in FPGA block RAM and mapped to high memory addresses (typically starting at 0x20000000 in physical memory).
+The boot ROM provides initial test programs and boot code for the VAX FPGA implementation. It's implemented as initialized block RAM and mapped to address 0x20000000 (boot address).
 
-## Boot Sequence
+**Implementation Status:** ✅ COMPLETE
+
+## Implementation Details
+
+**File:** `rtl/memory/boot_rom.vhd`
+
+- **Size:** 4KB (1024 longwords)
+- **Technology:** Initialized VHDL constant array
+- **Base Address:** 0x20000000
+- **Contains:** Five test programs for CPU validation
+
+## Test Programs in ROM
+
+The Boot ROM contains five test programs at different offsets:
+
+### Test Program 1: Basic Arithmetic (Offset 0x000) ⭐ DEFAULT BOOT
+**Tests:** MOVL, ADDL3, HALT
+
+```assembly
+; R1 = 42, R2 = 10, R3 = R1 + R2 = 52
+MOVL    #42, R1
+MOVL    #10, R2
+ADDL3   R1, R2, R3
+HALT
+```
+
+**Expected Results:**
+- R1 = 42 (0x2A)
+- R2 = 10 (0x0A)
+- R3 = 52 (0x34)
+- Z flag = 0, N flag = 0
+
+### Test Program 2: Procedure Call (Offset 0x100)
+**Tests:** CALLS, RET, stack frame management
+
+```assembly
+; Call procedure at 0x120
+CALLS   #0, @#0x120
+HALT
+
+; Procedure at 0x120
+proc:
+    .word   0x0000          ; Entry mask (no registers saved)
+    MOVL    #99, R0
+    RET
+```
+
+**Expected Results:**
+- R0 = 99 (0x63)
+- Stack properly unwound
+- Execution continues after CALLS
+
+### Test Program 3: Exception Test (Offset 0x200)
+**Tests:** Reserved instruction exception, SCB dispatch, REI
+
+```assembly
+; Execute invalid opcode (triggers exception)
+.byte   0xFF                ; Reserved instruction
+HALT
+```
+
+**Expected Results:**
+- Exception generated
+- SCB dispatch to handler at 0x300
+- Handler sets R0 = 255 and executes REI
+- Execution continues (or halts)
+
+### Test Program 4: Stack Operations (Offset 0x400)
+**Tests:** PUSHL (when implemented)
+
+```assembly
+PUSHL   #100
+PUSHL   #200
+HALT
+```
+
+**Expected Results:**
+- Stack contains 100 and 200
+- SP decremented correctly
+
+### Test Program 5: Branches (Offset 0x500)
+**Tests:** CMPL, BEQL conditional branch
+
+```assembly
+MOVL    #0, R0
+CMPL    R0, #0
+BEQL    target              ; Should branch (Z=1)
+HALT                        ; Skipped
+target:
+MOVL    #55, R0
+HALT
+```
+
+**Expected Results:**
+- R0 = 55 (0x37)
+- Branch taken
+- First HALT skipped
+
+## Boot Sequence (Current Implementation)
 
 1. **Power-On Reset**
-   - PC set to boot ROM base (0x20000000)
+   - PC set to 0x20000000 (ROM base)
    - PSL set to kernel mode
+   - SP set to 0x7FFFFFFF (top of memory)
    - All registers cleared
-   - MMU disabled initially
+   - SCBB set to 0x80000000
 
-2. **Self-Test**
-   - Test ALU operations
-   - Test memory (basic read/write)
-   - Test console output
+2. **Test Program Execution**
+   - By default, executes Test Program 1 (basic arithmetic)
+   - Other programs can be selected by changing reset PC
 
-3. **Console Initialization**
-   - Initialize UART
-   - Print banner message
+3. **Future Boot Sequence**
+   - Console initialization
+   - Device detection
+   - Bootstrap loader
+   - VMS boot
 
-4. **Boot Device Selection**
-   - Check for bootable disk
-   - Read boot block from disk sector 0
-   - Validate boot block signature
-
-5. **Bootstrap Loader**
-   - Load VMS bootstrap from disk
-   - Transfer control to bootstrap
-
-## Boot ROM Memory Map
+## Boot ROM Memory Map (Actual Implementation)
 
 ```
-0x20000000 - 0x20000003  Reset vector (JMP to start)
-0x20000004 - 0x20000007  Machine check vector
-0x20000008 - 0x2000000B  Kernel stack invalid vector
-0x2000000C - 0x2000000F  Power fail vector
-0x20000010 - 0x20000FFF  Boot code
-0x20001000 - 0x20001FFF  Data area
+0x20000000 - 0x200000FF  Test Program 1: Basic Arithmetic (default boot)
+0x20000100 - 0x200001FF  Test Program 2: Procedure Call
+0x20000200 - 0x200002FF  Test Program 3: Exception Test
+0x20000300 - 0x200003FF  Exception Handler
+0x20000400 - 0x200004FF  Test Program 4: Stack Operations
+0x20000500 - 0x200005FF  Test Program 5: Branches
+0x20000600 - 0x20000FFF  Reserved (filled with HALT)
+0x20001000 - 0x20001FFF  Future: Data area / Additional code
 ```
+
+**Total ROM Size:** 4KB (0x1000 bytes)
 
 ## Sample Boot ROM Code (Pseudo-Assembly)
 
