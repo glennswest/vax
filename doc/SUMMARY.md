@@ -98,9 +98,9 @@ Implemented by category:
 
 ✅ **PCIe Interface** (`pcie_interface.vhd`)
 - AXI Stream interface
-- Virtual disk protocol
-- Console multiplexing
-- Host communication
+- Peripheral device support (Ethernet, GPU, NVMe, SATA)
+- Configuration space and BAR mapping
+- Multi-device enumeration
 
 ### Documentation (100% Complete)
 ✅ **Comprehensive documentation set:**

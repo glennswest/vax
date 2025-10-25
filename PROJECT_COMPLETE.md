@@ -31,7 +31,7 @@ Successfully created a comprehensive VAX-11/780 FPGA implementation in VHDL with
 - ✅ `massbus_controller.vhd` - RP06/RP07 disk emulation
 - ✅ `unibus_controller.vhd` - DL11 console
 - ✅ `tty_uart.vhd` - Serial terminal
-- ✅ `pcie_interface.vhd` - Host communication
+- ✅ `pcie_interface.vhd` - Peripheral device support (Ethernet, GPU, NVMe, SATA)
 
 ### 2. Comprehensive Documentation (9 files, ~4,000 lines)
 

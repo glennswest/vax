@@ -92,11 +92,14 @@ Serial console for operator interaction:
 - Standard VAX console protocol
 
 ### PCIe Interface
-Modern host interface:
-- Virtual device access from host
-- Disk image transfer
-- Console multiplexing
-- Debugging and control
+Modern peripheral device support:
+- PCIe Ethernet controllers (network connectivity)
+- PCIe GPU devices (graphics acceleration)
+- PCIe NVMe storage (high-speed disk I/O)
+- PCIe SATA controllers (legacy disk support)
+- Other PCIe expansion cards
+- Configuration space and BAR (Base Address Register) mapping
+- Multiple device support with proper enumeration
 
 ## Pipeline Design
 

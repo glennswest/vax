@@ -50,9 +50,9 @@ This project provides a complete VAX-11/780 processor implementation in VHDL for
 
 8. **PCIe Interface** (`rtl/io/pcie_interface.vhd`)
    - AXI Stream interface to Xilinx PCIe IP
-   - Virtual disk image access
-   - Console multiplexing
-   - Message protocol for host communication
+   - Peripheral device support (Ethernet, GPU, NVMe, SATA)
+   - Configuration space and BAR mapping
+   - Generic PCIe device enumeration and management
 
 ### TODO: Critical Implementation Work
 
@@ -149,17 +149,18 @@ Tools -> IP Catalog -> PCIe -> AXI Bridge for PCI Express
 - Enable AXI Stream interface
 - Connect to pcie_interface.vhd
 
-#### 7. Host Software
+#### 7. PCIe Device Drivers
 
-Create host driver (Linux/Windows) for:
-- Disk image management
-- Console access
-- Control and status
-- Debugging interface
+PCIe peripheral devices require proper drivers within the VAX operating system:
+- NIC drivers for PCIe Ethernet controllers
+- Display drivers for PCIe GPU devices
+- Storage drivers for NVMe/SATA controllers
+- Generic PCIe device enumeration
 
-Use standard PCIe driver framework:
-- Linux: VFIO or UIO
-- Windows: WDF
+OpenVMS and other VAX operating systems will need:
+- Device recognition and configuration
+- Interrupt handling for PCIe devices
+- DMA support for high-speed peripherals
 
 #### 8. Testing and Validation
 
@@ -287,7 +288,7 @@ Focus areas for contribution:
 2. Addressing mode parser
 3. Test programs
 4. Boot ROM
-5. Host software
+5. PCIe device support
 
 ## License
 
