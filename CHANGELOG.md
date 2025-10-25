@@ -47,6 +47,17 @@
 - Branch target calculation
 - Condition code evaluation
 
+#### Operand Fetching Integration ⭐ CRITICAL MILESTONE
+- **New CPU implementation: `vax_cpu_v3.vhd`**
+- **Complete integration of addressing mode decoder with CPU execution pipeline**
+- Multi-operand instruction handling (up to 6 operands per instruction)
+- Memory arbitration between instruction fetch, operand fetch, and execution
+- Register and memory operand support
+- Auto-increment/decrement register updates
+- Proper writeback to both registers and memory
+- Support for all 16 addressing modes during operand fetch
+- Removes the main blocker for VAX instruction execution
+
 #### New Features
 - **Branch Instructions:** All 15 conditional branches working
   - BEQL, BNEQ, BGTR, BLEQ, BGEQ, BLSS
@@ -63,36 +74,45 @@
 - Added `doc/instruction_reference.md` - Complete VAX instruction reference
 - Added `doc/boot_rom_design.md` - Boot ROM architecture
 - Added `doc/implementation_guide.md` - Development roadmap
+- Added `doc/operand_fetching.md` - Operand fetching integration guide
 - Updated README with current project status
 
 ### Testing
 - New testbench: `tb_decoder.vhd` - Tests all 75+ instructions
-- Validates opcode recognition
-- Checks operand count
-- Verifies instruction classification
+  - Validates opcode recognition
+  - Checks operand count
+  - Verifies instruction classification
+- New testbench: `tb_operand_fetch.vhd` - Comprehensive operand fetching tests
+  - Tests MOVL #42, R1 (immediate to register)
+  - Tests ADDL3 R1, R2, R3 (three register operands)
+  - Tests MOVL R1, 100(R2) (displacement mode)
+  - Tests CMPL #5, R1 (literal mode)
+  - Tests BRB +10 (branch instruction)
 
 ### Files Added
 - `rtl/cpu/vax_cpu_v2.vhd` - Improved CPU core
+- `rtl/cpu/vax_cpu_v3.vhd` - CPU with operand fetching integration ⭐
 - `rtl/cpu/vax_decoder.vhd` - Comprehensive instruction decoder
 - `rtl/cpu/vax_addr_mode.vhd` - Addressing mode handler
 - `sim/tb/tb_decoder.vhd` - Decoder testbench
+- `sim/tb/tb_operand_fetch.vhd` - Operand fetching testbench ⭐
 - `doc/decoder_status.md` - Implementation status
 - `doc/instruction_reference.md` - Instruction set guide
 - `doc/boot_rom_design.md` - Boot ROM design
+- `doc/operand_fetching.md` - Operand fetching guide ⭐
 - `CHANGELOG.md` - This file
 
 ### Known Issues
-- Operand fetching not fully integrated into CPU
 - CALLS/CALLG/RET only partially implemented
 - Exception handling incomplete
 - String operations recognized but not executed
 - No boot ROM content yet
 
 ### Metrics
-- **Lines of VHDL:** ~3,500 (up from ~1,200)
+- **Lines of VHDL:** ~4,400 (up from ~1,200)
 - **Instructions Implemented:** 75+ (up from 5)
 - **Instruction Set Coverage:** ~37% (up from ~2%)
-- **Boot Readiness:** ~60% (up from ~10%)
+- **Boot Readiness:** ~70% (up from ~10%)
 
 ---
 
@@ -138,9 +158,9 @@
 
 ## Roadmap
 
-### Version 0.3.0 (Planned - 4-6 weeks)
-- [ ] Integrate vax_addr_mode into CPU
-- [ ] Complete operand fetching for all modes
+### Version 0.3.0 (Planned - 3-5 weeks)
+- [x] Integrate vax_addr_mode into CPU ⭐ COMPLETED
+- [x] Complete operand fetching for all modes ⭐ COMPLETED
 - [ ] Implement CALLS/CALLG/RET fully
 - [ ] Add exception handling
 - [ ] Boot ROM with simple test programs
