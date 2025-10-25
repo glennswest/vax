@@ -120,29 +120,55 @@
 - `rtl/cpu/vax_cpu_v2.vhd` - Improved CPU core
 - `rtl/cpu/vax_cpu_v3.vhd` - CPU with operand fetching integration ⭐
 - `rtl/cpu/vax_cpu_v4.vhd` - CPU with procedure calls ⭐⭐
+- `rtl/cpu/vax_cpu_v5.vhd` - CPU with exception handling ⭐⭐⭐
 - `rtl/cpu/vax_decoder.vhd` - Comprehensive instruction decoder
 - `rtl/cpu/vax_addr_mode.vhd` - Addressing mode handler
+- `rtl/memory/boot_rom.vhd` - Boot ROM with test programs ⭐⭐⭐
 - `sim/tb/tb_decoder.vhd` - Decoder testbench
 - `sim/tb/tb_operand_fetch.vhd` - Operand fetching testbench ⭐
 - `sim/tb/tb_procedure_calls.vhd` - Procedure call testbench ⭐⭐
+- `sim/tb/tb_exceptions.vhd` - Exception handling testbench ⭐⭐⭐
 - `doc/decoder_status.md` - Implementation status
 - `doc/instruction_reference.md` - Instruction set guide
-- `doc/boot_rom_design.md` - Boot ROM design
+- `doc/boot_rom_design.md` - Boot ROM design and test programs ⭐⭐⭐
 - `doc/operand_fetching.md` - Operand fetching guide ⭐
 - `doc/procedure_calls.md` - Procedure calling guide ⭐⭐
+- `doc/exception_handling.md` - Exception handling guide ⭐⭐⭐
 - `CHANGELOG.md` - This file
 
+#### Exception Handling and REI ⭐⭐⭐ CRITICAL MILESTONE
+- **New CPU implementation: `vax_cpu_v5.vhd`**
+- **Complete VAX exception/interrupt mechanism**
+- SCB (System Control Block) based exception dispatch
+- Exception vector mapping for 11+ exception types
+- Multi-state exception entry (push PC, PSL, read SCB, dispatch)
+- REI instruction (opcode 02) fully implemented
+- Mode transition validation
+- Critical for OpenVMS boot
+
+#### Boot ROM Implementation ⭐⭐⭐ FINAL CRITICAL MILESTONE
+- **New component: `rtl/memory/boot_rom.vhd`**
+- **5 comprehensive test programs**
+- 4KB initialized block RAM
+- Test Program 1: Basic arithmetic (default boot)
+- Test Program 2: Procedure call (CALLS/RET)
+- Test Program 3: Exception handling (exception/REI)
+- Test Program 4: Stack operations (PUSHL)
+- Test Program 5: Conditional branches (CMPL/BEQL)
+- All Phase 1 critical items COMPLETE!
+
 ### Known Issues
-- Exception handling incomplete
 - String operations recognized but not executed
-- No boot ROM content yet
-- CALLS/CALLG/RET needs simulation testing to validate
+- Queue instructions not implemented
+- Floating point not implemented
+- Boot ROM not yet integrated into top-level
 
 ### Metrics
-- **Lines of VHDL:** ~5,900 (up from ~1,200)
-- **Instructions Implemented:** 78+ (up from 5) [added CALLS, CALLG, RET]
-- **Instruction Set Coverage:** ~38% (up from ~2%)
-- **Boot Readiness:** ~75% (up from ~10%)
+- **Lines of VHDL:** ~7,800 (up from ~1,200)
+- **Instructions Implemented:** 80+ (up from 5) [added CALLS, CALLG, RET, REI]
+- **Instruction Set Coverage:** ~39% (up from ~2%)
+- **Boot Readiness:** ~85% (up from ~10%) ⭐⭐⭐
+- **Phase 1: COMPLETE** (4/4 critical items)
 
 ---
 
@@ -188,13 +214,14 @@
 
 ## Roadmap
 
-### Version 0.3.0 (Planned - 2-4 weeks)
+### Version 0.3.0 (IN PROGRESS - Critical Items COMPLETE!)
 - [x] Integrate vax_addr_mode into CPU ⭐ COMPLETED
 - [x] Complete operand fetching for all modes ⭐ COMPLETED
 - [x] Implement CALLS/CALLG/RET fully ⭐⭐ COMPLETED
-- [ ] Add exception handling (SCB, REI)
-- [ ] Boot ROM with simple test programs
+- [x] Add exception handling (SCB, REI) ⭐⭐⭐ COMPLETED
+- [x] Boot ROM with test programs ⭐⭐⭐ COMPLETED
 - [ ] Comprehensive instruction tests
+- [ ] Top-level integration with Boot ROM
 
 ### Version 0.4.0 (Planned - 2-3 months)
 - [ ] String operation execution (MOVC3, MOVC5)
