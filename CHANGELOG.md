@@ -121,6 +121,7 @@
 - `rtl/cpu/vax_cpu_v3.vhd` - CPU with operand fetching integration ⭐
 - `rtl/cpu/vax_cpu_v4.vhd` - CPU with procedure calls ⭐⭐
 - `rtl/cpu/vax_cpu_v5.vhd` - CPU with exception handling ⭐⭐⭐
+- `rtl/cpu/vax_cpu_v6.vhd` - CPU with Phase 2 features ⭐⭐
 - `rtl/cpu/vax_decoder.vhd` - Comprehensive instruction decoder
 - `rtl/cpu/vax_addr_mode.vhd` - Addressing mode handler
 - `rtl/memory/boot_rom.vhd` - Boot ROM with test programs ⭐⭐⭐
@@ -128,12 +129,14 @@
 - `sim/tb/tb_operand_fetch.vhd` - Operand fetching testbench ⭐
 - `sim/tb/tb_procedure_calls.vhd` - Procedure call testbench ⭐⭐
 - `sim/tb/tb_exceptions.vhd` - Exception handling testbench ⭐⭐⭐
+- `sim/tb/tb_phase2.vhd` - Phase 2 features testbench ⭐⭐
 - `doc/decoder_status.md` - Implementation status
 - `doc/instruction_reference.md` - Instruction set guide
 - `doc/boot_rom_design.md` - Boot ROM design and test programs ⭐⭐⭐
 - `doc/operand_fetching.md` - Operand fetching guide ⭐
 - `doc/procedure_calls.md` - Procedure calling guide ⭐⭐
 - `doc/exception_handling.md` - Exception handling guide ⭐⭐⭐
+- `doc/phase2_features.md` - Phase 2 extended features guide ⭐⭐
 - `CHANGELOG.md` - This file
 
 #### Exception Handling and REI ⭐⭐⭐ CRITICAL MILESTONE
@@ -158,17 +161,17 @@
 - All Phase 1 critical items COMPLETE!
 
 ### Known Issues
-- String operations recognized but not executed
-- Queue instructions not implemented
 - Floating point not implemented
 - Boot ROM not yet integrated into top-level
+- Bit field instructions not implemented
 
 ### Metrics
-- **Lines of VHDL:** ~7,800 (up from ~1,200)
-- **Instructions Implemented:** 80+ (up from 5) [added CALLS, CALLG, RET, REI]
-- **Instruction Set Coverage:** ~39% (up from ~2%)
-- **Boot Readiness:** ~85% (up from ~10%) ⭐⭐⭐
+- **Lines of VHDL:** ~9,200 (up from ~1,200)
+- **Instructions Implemented:** 90+ (up from 5) [added string ops, queue ops, branch variations]
+- **Instruction Set Coverage:** ~44% (up from ~2%)
+- **Boot Readiness:** ~88% (up from ~10%) ⭐⭐⭐
 - **Phase 1: COMPLETE** (4/4 critical items)
+- **Phase 2: COMPLETE** (10 new instructions)
 
 ---
 
@@ -223,10 +226,26 @@
 - [ ] Comprehensive instruction tests
 - [ ] Top-level integration with Boot ROM
 
+#### Phase 2 Extended Features ⭐⭐ MAJOR MILESTONE
+- **New CPU implementation: `vax_cpu_v6.vhd`**
+- **Complete string operation execution**
+- MOVC3 instruction (opcode 0x28) fully implemented
+- MOVC5 instruction (opcode 0x2C) with fill byte support
+- CMPC3 instruction (opcode 0x29) for string comparison
+- CMPC5 instruction (opcode 0x2D) with fill byte
+- Multi-cycle state machine for interruptible string operations
+- **Queue instruction implementation**
+- INSQUE instruction (opcode 0x0E) fully implemented
+- REMQUE instruction (opcode 0x0F) fully implemented
+- Doubly-linked queue manipulation
+- **Additional branch instructions**
+- AOBLSS (opcode 0xF2) - Add One and Branch Less
+- AOBLEQ (opcode 0xF3) - Add One and Branch Less or Equal
+- SOBGEQ (opcode 0xF4) - Subtract One and Branch Greater or Equal
+- SOBGTR (opcode 0xF5) - Subtract One and Branch Greater
+- Critical for loop optimization in compiled code
+
 ### Version 0.4.0 (Planned - 2-3 months)
-- [ ] String operation execution (MOVC3, MOVC5)
-- [ ] Queue instructions (INSQUE, REMQUE)
-- [ ] REI instruction fully working
 - [ ] VMS boot sequence to console prompt
 
 ### Version 0.5.0 (Planned - 4-6 months)
