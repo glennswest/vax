@@ -21,23 +21,31 @@
 - `sim/tb/tb_operand_fetch.vhd` - Comprehensive testbench
 - `doc/operand_fetching.md` - Full documentation
 
-### 2. CALLS/CALLG/RET Completion
+### 2. CALLS/CALLG/RET Completion ✅ COMPLETED
 **Priority:** High
 **Effort:** 1-2 weeks
-**Status:** Partially implemented
+**Status:** ✅ COMPLETE
 
-- [ ] Complete CALLS instruction
-  - [ ] Stack frame creation
-  - [ ] Argument list processing
-  - [ ] Save registers (R2-R11, AP, FP)
-  - [ ] Condition handler setup
-- [ ] Complete CALLG instruction
-  - [ ] Argument list pointer handling
-- [ ] Complete RET instruction
-  - [ ] Restore registers
-  - [ ] Unwind stack frame
-  - [ ] Return to caller
-- [ ] Test nested procedure calls
+- [x] Complete CALLS instruction
+  - [x] Stack frame creation
+  - [x] Argument list processing
+  - [x] Save registers (R0-R11) according to entry mask
+  - [x] PSW preservation
+  - [ ] Condition handler setup (deferred to exception handling)
+- [x] Complete CALLG instruction
+  - [x] Argument list pointer handling
+- [x] Complete RET instruction
+  - [x] Restore registers
+  - [x] Unwind stack frame
+  - [x] Return to caller
+- [x] Test nested procedure calls
+
+**Completed:** Full VAX procedure calling convention implemented!
+
+**Deliverables:**
+- `rtl/cpu/vax_cpu_v4.vhd` - Complete CPU with CALLS/CALLG/RET
+- `sim/tb/tb_procedure_calls.vhd` - Comprehensive testbench
+- `doc/procedure_calls.md` - Full documentation
 
 ### 3. Exception Handling
 **Priority:** High
@@ -216,9 +224,10 @@
 
 ## Timeline Estimate
 
-**Phase 1: Core Functionality (3-6 weeks)**
+**Phase 1: Core Functionality (2-4 weeks)**
 - ✅ Item 1: Operand fetching integration (COMPLETED)
-- Items 2-4: Critical path to boot (remaining)
+- ✅ Item 2: CALLS/CALLG/RET completion (COMPLETED)
+- Items 3-4: Critical path to boot (remaining)
 
 **Phase 2: Extended Features (4-6 weeks)**
 - Items 5-7: String, queue, branches
@@ -232,8 +241,8 @@
 **Phase 5: Testing and Optimization (4-8 weeks)**
 - Items 11-14: Performance, hardware, VMS
 
-**Total to VMS Boot:** 10-20 weeks (2.5-5 months)
-**Progress:** ~30% complete (operand fetching milestone achieved)
+**Total to VMS Boot:** 8-18 weeks (2-4.5 months)
+**Progress:** ~40% complete (operand fetching + procedure calls achieved)
 
 ## How to Use This TODO
 
